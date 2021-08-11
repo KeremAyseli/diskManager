@@ -1,5 +1,5 @@
 # diskManager
- For finding bigger folder of your disk and management.I'll try to make windows disk manager program,its actually for find bigger file of disk.
+ For finding bigger folder of your disk and management.I'll try to make windows disk manager program.
  
  # How did I do this?
  It's actually working on powershell,send some command to powershell and read the output.
