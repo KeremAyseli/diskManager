@@ -20,13 +20,17 @@ public class FolderManager extends DiskManger {
     public FolderManager(String DiskLabel) throws IOException {
        AllFolder=new ArrayList<Folder>();
        for(String Folder:readAllFolderInDisk(DiskLabel)){
-           AllFolder.add(new Folder(Folder,Paths.get(DiskLabel+"/"+Folder),ReadFolderSize(Folder)));
+           long folderSize=ReadFolderSizeFast(DiskLabel,Folder);
+           AllFolder.add(new Folder(Folder,Paths.get(DiskLabel+"/"+Folder),folderSize==0?ReadFolderSize(DiskLabel, Folder):folderSize));
        }
     }
 
-    public Long ReadFolderSize(String FolderName) throws IOException{
-     return Long.parseLong(RunCommand("powershell.exe  $totalsize=[long] 0 ;Get-ChildItem -Path D:\\'"+FolderName+"' -File -Recurse -Force -ErrorAction SilentlyContinue | % {$totalsize += $_.Length};echo $totalsize;").get(0))/1024;
+    public Long ReadFolderSizeFast(String DiskLabel,String FolderName) throws IOException{
+     return Long.parseLong(RunCommand("powershell.exe  $totalsize=[long] 0 ;Get-ChildItem -Path "+DiskLabel+":\\'"+FolderName+"' -File -ErrorAction SilentlyContinue | % {$totalsize += $_.Length};echo $totalsize;").get(0))/1024;
     }
+    public Long ReadFolderSize(String DiskLabel,String FolderName) throws IOException{
+        return Long.parseLong(RunCommand("powershell.exe  $totalsize=[long] 0 ;Get-ChildItem -Path '"+DiskLabel+":\\"+FolderName+"' -File -Recurse -Force -ErrorAction SilentlyContinue | % {$totalsize += $_.Length};echo $totalsize;").get(0))/1024;
+       }
 
     public List<String> readAllFolderInDisk(String DiskLabel) throws IOException{
         return RunCommand("powershell.exe Get-ChildItem -Path "+DiskLabel+":\\ -Name"); 
