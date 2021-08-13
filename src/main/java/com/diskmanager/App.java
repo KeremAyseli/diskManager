@@ -12,10 +12,12 @@ public class App
 {
     public static void main( String[] args ) throws IOException
     {
-        FolderManager fm = new FolderManager("D");
-        for(Folder s:fm.getAllFolder()){
-            System.out.println(s.getFolderSize()+"MB "+s.getFolderName()+" "+s.getFolderPath());
-        }
+        FolderManagerWindows fm = new FolderManagerWindows("G");
+        FolderService fs = new FolderService();
+        Folder a =fs.getBiggerFolderOfDisk(fm.getAllFolder());
+       System.out.println(a.getFolderSize()+" "+a.getFolderName()+" "+a.getFolderPath());
+
+
 
     }
     

@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DiskManger {
+public class DiskManger {
   public List<String> RunCommand(String command) throws IOException {
     Process powerShellProcess = Runtime.getRuntime().exec(command);
     powerShellProcess.getOutputStream().close();
