@@ -12,11 +12,9 @@ public class App
 {
     public static void main( String[] args ) throws IOException
     {
-        FolderManagerWindows fm = new FolderManagerWindows("G");
-        FolderService fs = new FolderService();
-        Folder a =fs.getBiggerFolderOfDisk(fm.getAllFolder());
-       System.out.println(a.getFolderSize()+" "+a.getFolderName()+" "+a.getFolderPath());
+        FolderManagerWindows fm = new FolderManagerWindows();
 
+     System.out.println(fm.getCreationTime("D", "Java")+" "+fm.getLastAccess("D", "Java")); 
 
 
     }

@@ -13,7 +13,7 @@ public class Folder {
     private String FolderOwner;
     private String FolderDriver;
     public Folder(String folderName, Path folderPath, long folderSize, String folderCreationTime,
-            String folderLastModifiedTime, String folderLastAccessTime, String folderLastWriteTime, String folderOwner,
+            String folderLastModifiedTime, String folderLastAccessTime,
             String folderDriver) {
         FolderName = folderName;
         FolderPath = folderPath;
@@ -21,8 +21,6 @@ public class Folder {
         FolderCreationTime = folderCreationTime;
         FolderLastModifiedTime = folderLastModifiedTime;
         FolderLastAccessTime = folderLastAccessTime;
-        FolderLastWriteTime = folderLastWriteTime;
-        FolderOwner = folderOwner;
         FolderDriver = folderDriver;
     }
     public Folder() {
