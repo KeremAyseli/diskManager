@@ -37,7 +37,7 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
      public void ScanWithDetails(String DiskLabel) throws IOException, IllegalCharsetNameException {
         AllFolder = new ArrayList<Folder>();
         for (String Folder : readAllFolderInDisk(DiskLabel)) {
-            long folderSize = readFolderSize(DiskLabel, Folder);
+            long folderSize = readFolderSizeFast(DiskLabel, Folder);
             AllFolder.add(new Folder(Folder, Paths.get(DiskLabel + "/" + Folder),
                     folderSize == 0 ? readFolderSize(DiskLabel, Folder) : folderSize,
                     getCreationTime(DiskLabel, Folder), getLastModified(DiskLabel, Folder),
