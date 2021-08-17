@@ -26,7 +26,7 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
     public FolderManagerWindows(String DiskLabel) throws IOException, IllegalCharsetNameException {
         AllFolder = new ArrayList<Folder>();
         for (String Folder : readAllFolderInDisk(DiskLabel)) {
-            long folderSize = readFolderSize(DiskLabel, Folder);
+            long folderSize = readFolderSizeFast(DiskLabel, Folder);
             AllFolder.add(new Folder(Folder, Paths.get(DiskLabel + "/" + Folder),
                     folderSize == 0 ? readFolderSize(DiskLabel, Folder) : folderSize));
                 }
