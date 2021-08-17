@@ -1,0 +1,6 @@
+com\diskmanager\FolderService.class
+com\diskmanager\FolderManagerWindows.class
+com\diskmanager\DiskManger.class
+com\diskmanager\App.class
+com\diskmanager\Folder.class
+com\diskmanager\IFolderCommand.class
