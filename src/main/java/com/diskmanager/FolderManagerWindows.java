@@ -6,10 +6,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FolderManagerWindows extends DiskManger implements IFolderCommand {
+public class FolderManagerWindows  implements IFolderCommand {
 
     private List<Folder> AllFolder;
-
+    private CommandManager cmmManager = new CommandManager();
     public List<Folder> getAllFolder() {
         return AllFolder;
     }
@@ -20,6 +20,10 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
     public void setAllFolder(List<Folder> allFolder) {
         AllFolder = allFolder;
     }
+    /// <summary>
+    /// Filtreleme Boyut. Melih tarcan tarafından düşünülmüştür.
+    /// </summary>
+    
    /// <summary>
    /// Constructor method is default scan for 3 properties;Folder name,Folder path and Folder size.
    /// </summary>
@@ -50,7 +54,7 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
     public Long readFolderSizeFast(String DiskLabel, String FolderName)
             throws IOException, IllegalCharsetNameException {
         return Long.parseLong(
-                RunCommand("powershell.exe  $totalsize=[long] 0 ;Get-ChildItem -Path " + DiskLabel + ":\\'" + FolderName
+               cmmManager.RunCommand("powershell.exe  $totalsize=[long] 0 ;Get-ChildItem -Path " + DiskLabel + ":\\'" + FolderName
                         + "' -File -ErrorAction SilentlyContinue | % {$totalsize += $_.Length};echo $totalsize;")
                                 .get(0))
                 / 1024;
@@ -59,7 +63,7 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
     /// Read all folder in disk.But it is may slow.
     /// </summary>
     public Long readFolderSize(String DiskLabel, String FolderName) throws IOException, IllegalCharsetNameException {
-        return Long.parseLong(RunCommand("powershell.exe  $totalsize=[long] 0 ;Get-ChildItem -Path '" + DiskLabel
+        return Long.parseLong(cmmManager.RunCommand("powershell.exe  $totalsize=[long] 0 ;Get-ChildItem -Path '" + DiskLabel
                 + ":\\" + FolderName
                 + "' -File -Recurse -Force -ErrorAction SilentlyContinue | % {$totalsize += $_.Length};echo $totalsize;")
                         .get(0))
@@ -69,20 +73,20 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
     /// Read all folder or file name in disk.
     /// </summary>
     public List<String> readAllFolderInDisk(String DiskLabel) throws IOException, IllegalCharsetNameException {
-        return RunCommand("powershell.exe Get-ChildItem -Path " + DiskLabel + ":\\ -Name");
+        return cmmManager.RunCommand("powershell.exe Get-ChildItem -Path " + DiskLabel + ":\\ -Name");
     }
     /// <summary>
     /// Return Owner of folder or file.
     /// </summary> 
     public String getOwner(String DiskLabel, String FolderName) throws IOException, IllegalCharsetNameException {
-        return RunCommand("powershell.exe $owner='';Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
+        return cmmManager.RunCommand("powershell.exe $owner='';Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
                 + " -File -Recurse -ErrorAction SilentlyContinue | % {$owner= $_.UserName};echo $owner;").get(0);
     }
     /// <summary>
     /// Return LastAccessTime of folder or file.
     /// </summary>
     public String getLastAccess(String DiskLabel, String FolderName) throws IOException, IllegalCharsetNameException {
-        return RunCommand("powershell.exe $lastAccessTime='';Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
+        return cmmManager.RunCommand("powershell.exe $lastAccessTime='';Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
                 + " -File -Recurse -ErrorAction SilentlyContinue | % {$lastAccessTime=$_.LastAccessTime.Date.ToString()};echo $lastAccessTime;")
                         .get(0);
     }
@@ -90,7 +94,7 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
     /// Return LastModifiedTime of folder or file.
     /// </summary>
     public String getLastModified(String DiskLabel, String FolderName) throws IOException, IllegalCharsetNameException {
-        return RunCommand("powershell.exe $lastModifiedTime='';Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
+        return cmmManager.RunCommand("powershell.exe $lastModifiedTime='';Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
                 + " -File -Recurse -ErrorAction SilentlyContinue | % {$lastModifiedTime= $_.LastWriteTime.Day.ToString()}; echo $lastModifiedTime;")
                         .get(0);
     }
@@ -98,7 +102,7 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
     /// Return CreationTime of folder or file.
     /// </summary>
     public String getCreationTime(String DiskLabel, String FolderName) throws IOException, IllegalCharsetNameException {
-        return RunCommand("powershell.exe  $creationTime='';Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
+        return cmmManager.RunCommand("powershell.exe  $creationTime='';Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
                 + " -File -Recurse -ErrorAction SilentlyContinue | % {$creationTime= $_.CreationTime.Month.ToString()+' '+$_.CreationTime.Year.ToString()};echo $creationTime;")
                         .get(0);
     }
@@ -107,7 +111,7 @@ public class FolderManagerWindows extends DiskManger implements IFolderCommand {
    /// </summary>
     public String getLastModifiedTime(String DiskLabel, String FolderName)
             throws IOException, IllegalCharsetNameException {
-        return RunCommand("powershell.exe  $lastAccessTime=''; Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
+        return cmmManager.RunCommand("powershell.exe  $lastAccessTime=''; Get-ChildItem -Path " + DiskLabel + ":\\" + FolderName
                 + " -File -Recurse -Force -ErrorAction SilentlyContinue | % {$lastAccessTime= $_.LastWriteTime.Date.ToString()};echo $lastAccessTime;")
                         .get(0);
     }
